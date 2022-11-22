@@ -63,7 +63,7 @@ class Game {
       { x: width / 2 + 250, y: height - 4800, image: obstacle2Image },
       { x: width / 2 - 180, y: height - 5500, image: obstacle2Image }
     ];
-    // Adicione o sprite de combustível ao jogo
+   
     this.addSprites(fuels, 4, fuelImage, 0.02);
 
     // Adicione o sprite de moeda ao jogo
@@ -150,16 +150,15 @@ class Game {
         cars[index - 1].position.x = x;
         cars[index - 1].position.y = y;
 
-        // C38  SA
+        
         if (index === player.index) {
           stroke(10);
           fill("red");
           ellipse(x, y, 60, 60);
-
           this.handleFuel(index);
           this.handlePowerCoins(index);
-          this.handleObstacleCollision(index);
-          // Alterando a posição da câmera na direção y
+         
+          
           camera.position.x = cars[index - 1].position.x;
           camera.position.y = cars[index - 1].position.y;
 
@@ -200,40 +199,7 @@ class Game {
     pop();
   }
 
-  handleObstacleCollision(index) {
-    if(cars[index-1].collide(obstacle1) || cars[index-1].collide(obstacle2)) {
-
-    if (this.leftKeyActive) {
-      player.positionX += 100;
-    } else {
-      player.positionX -= 100;
-    }
-
-    if(player.life > 0){
-      player.life -= 185 / 4;
-    }
-
-      player.update();
-    }
-  }
-
-  handleFuel(index) {
-    // Adicione o combustível
-    cars[index - 1].overlap(fuels, function(collector, collected) {
-      player.fuel = 185;
-      //collected (coletado) é o sprite no grupo de colecionáveis que desencadeia
-      //o evento
-      collected.remove();
-    });
-    if (player.fuel > 0 && this.playerMoving) {
-      player.fuel -= 0.3;
-    }
-
-    if (player.fuel <= 0) {
-      gameState = 2;
-      this.gameOver();
-    }
-  }
+ 
 
   handlePowerCoins(index) {
     cars[index - 1].overlap(powerCoins, function(collector, collected) {
